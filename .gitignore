@@ -1,0 +1,10 @@
+# JetBrains IDEs
+.idea/
+
+# VSCode
+.vscode/
+
+# macOS specific files
+.DS_Store
+
+

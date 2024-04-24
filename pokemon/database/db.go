@@ -9,6 +9,7 @@ import (
 
 func Connect() (*mongo.Client, error) {
 	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI("mongodb://localhost:27017"))
+	// terminate the program should always be done in the main function.
 	if err != nil {
 		return nil, err
 	}

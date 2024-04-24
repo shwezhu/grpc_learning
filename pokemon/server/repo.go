@@ -24,8 +24,8 @@ func NewRepository(db *mongo.Client) *Repository {
 	}
 }
 
-func (r *Repository) CreatePokemon(pokemon Pokemon) error {
-	_, err := r.PokemonColl.InsertOne(context.TODO(), pokemon)
+func (r *Repository) CreatePokemon(ctx context.Context, pokemon *Pokemon) error {
+	_, err := r.PokemonColl.InsertOne(ctx, pokemon)
 	if err != nil {
 		return fmt.Errorf("failed to insert pokemon: %w", err)
 	}
@@ -62,10 +62,6 @@ func (r *Repository) GetPokemonByID(ctx context.Context, id string) (Pokemon, er
 }
 
 func (r *Repository) UpdatePokemon(ctx context.Context, pokemon Pokemon) error {
-	if pokemon.ID == "" {
-		return errors.New("pokemon ID is required")
-	}
-
 	filter := bson.D{{"_id", pokemon.ID}}
 
 	pokemon.UpdatedAt = time.Now()

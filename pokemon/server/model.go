@@ -14,13 +14,13 @@ type Pokemon struct {
 	UpdatedAt time.Time `bson:"updated_at,omitempty"`
 }
 
-func pokemonToResponse(p Pokemon) pb.Pokemon {
+func pokemonToResponse(p *Pokemon) *pb.Pokemon {
 	types := make([]pb.Type, len(p.Types))
 	for i, t := range p.Types {
 		types[i] = pb.Type(pb.Type_value[t])
 	}
 
-	return pb.Pokemon{
+	return &pb.Pokemon{
 		Id:        p.ID,
 		Name:      p.Name,
 		Type:      types,

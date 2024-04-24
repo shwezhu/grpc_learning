@@ -41,7 +41,7 @@ message Pokemon {
 }
 
 message PokemonRequest {
-  int32 id = 1;
+  string id = 1;
   string name = 2;
   repeated Type type = 3;
 }
@@ -50,10 +50,10 @@ message PokemonListResponse { repeated Pokemon pokemon = 1; }
 
 message PokemonFilter {};
 
-message PokemonID { int32 id = 1; }
+message PokemonID { string id = 1; }
 
 message PokemonUpdateRequest {
-  int32 id = 1;
+  string id = 1;
   string name = 2;
   repeated Type type = 3;
 }

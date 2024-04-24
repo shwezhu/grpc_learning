@@ -26,20 +26,20 @@ func TestCreatePokemon(t *testing.T) {
 	defer teardown(client)
 
 	repo := server.NewRepository(client)
-	testPokemon := server.Pokemon{
-		Name:      "Pikachu",
+	testPokemon := &server.Pokemon{
+		Name:      "Pikachu123",
 		Types:     []string{"Electric"},
 		CreatedAt: time.Now(),
 		UpdatedAt: time.Now(),
 	}
 
-	err = repo.CreatePokemon(testPokemon)
+	err = repo.CreatePokemon(context.TODO(), testPokemon)
 	assert.NoError(t, err)
 
 	var result server.Pokemon
-	err = repo.PokemonColl.FindOne(context.TODO(), bson.M{"name": "Pikachu"}).Decode(&result)
+	err = repo.PokemonColl.FindOne(context.TODO(), bson.M{"name": "Pikachu123"}).Decode(&result)
 	assert.NoError(t, err)
-	assert.Equal(t, "Pikachu", result.Name)
+	assert.Equal(t, "Pikachu123", result.Name)
 	assert.Equal(t, []string{"Electric"}, result.Types)
 }
 
@@ -52,7 +52,7 @@ func TestUpdatePokemon(t *testing.T) {
 
 	repo := server.NewRepository(client)
 	testPokemon := server.Pokemon{
-		ID:        "003",
+		ID:        "007",
 		Name:      "Bulbasaur",
 		Types:     []string{"Grass", "Poison"},
 		CreatedAt: time.Now(),
@@ -68,7 +68,7 @@ func TestUpdatePokemon(t *testing.T) {
 	assert.NoError(t, err)
 
 	var result server.Pokemon
-	err = repo.PokemonColl.FindOne(context.TODO(), bson.M{"_id": "003"}).Decode(&result)
+	err = repo.PokemonColl.FindOne(context.TODO(), bson.M{"_id": "007"}).Decode(&result)
 	assert.NoError(t, err)
 	assert.Equal(t, "Ivysaur", result.Name)
 	assert.Equal(t, []string{"Grass"}, result.Types)
